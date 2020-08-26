@@ -1,5 +1,11 @@
 # Ticketing App
 
+A demo application showcasing the use of microservices to build a web application for selling tickets to events hosted in a kubernetes cluster. 
+
+NOTE: Current implementation does not utilize rest resources completely due to a limitation of the nginx ingress controller which does not support http vers. 
+
+
+TODO: Replace the nginx ingress controller with virtualserver resource
 
 ## Deployment
 
