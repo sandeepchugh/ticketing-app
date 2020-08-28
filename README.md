@@ -31,6 +31,18 @@ Stopping the cluster
 CTRL+C
 ```
 
+## Configuration
+
+### Secrets Management
+Create a secret for the jwt secret key to be used by the auth service to sign the jwt token
+
+```
+kubectl create secret generic [secret name] --from-literal=[key]=[value]
+```
+E.g
+```
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=mysecretkey
+```
 
 ### Ingress Controllers 
 Ingress controllers are used for load balancing and routing / traffic shaping
