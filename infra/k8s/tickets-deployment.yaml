@@ -23,6 +23,14 @@ spec:
                     key: JWT_KEY
             - name: MONGO_URI
               value: 'mongodb://tickets-mongo-svc:27017/tickets'
+            - name: NATS_URI
+              value: 'http://nats-svc:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'ticketing'
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
 ---
 apiVersion: v1
 kind: Service
