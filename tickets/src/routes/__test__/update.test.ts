@@ -13,7 +13,7 @@ it('returns a 404 if the provided ticket id does not exist', async () =>  {
         .set('Cookie', global.signin())
         .send({
             title: 'Movie2',
-            price: '20'
+            price: 20
         })
         .expect(404);
     
@@ -25,7 +25,7 @@ it('returns a 401 if the user is not authenticated', async () =>  {
         .set('Cookie', global.signin())
         .send({
             title: 'Movie2',
-            price: '20'
+            price: 20
         })
         .expect(201);
 
@@ -33,7 +33,7 @@ it('returns a 401 if the user is not authenticated', async () =>  {
         .put(`/api/tickets/${response.body.id}`)
         .send({
             title: 'Movie21',
-            price: '19'
+            price: 19
         })
         .expect(401);
     
@@ -45,7 +45,7 @@ it('returns a 401 if the user does not own the ticket', async () =>  {
         .set('Cookie', global.signin())
         .send({
             title: 'Movie2',
-            price: '20'
+            price: 20
         })
         .expect(201);
 
@@ -54,9 +54,34 @@ it('returns a 401 if the user does not own the ticket', async () =>  {
         .set('Cookie', global.signin())
         .send({
             title: 'Movie21',
-            price: '19'
+            price: 19
         })
         .expect(401);
+    
+});
+
+it('returns a 400 if the ticket is reserved', async () =>  {
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', global.signin())
+        .send({
+            title: 'Movie2',
+            price: 20
+        })
+        .expect(201);
+    
+    const ticket = await Ticket.findById(response.body.id);
+    ticket!.set({orderId: mongoose.Types.ObjectId().toHexString()});
+    await ticket!.save();
+
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', global.signin())
+        .send({
+            title: 'Movie21',
+            price: 19
+        })
+        .expect(400);
     
 });
 
@@ -67,7 +92,7 @@ it('returns a 400 if the user provides an invalid title or price', async () =>  
         .set('Cookie', cookie)
         .send({
             title: 'Movie2',
-            price: '20'
+            price: 20
         })
         .expect(201);
 
@@ -76,7 +101,7 @@ it('returns a 400 if the user provides an invalid title or price', async () =>  
         .set('Cookie', cookie)
         .send({
             title: '',
-            price: '20'
+            price: 20
         })
         .expect(400);
 
@@ -85,7 +110,7 @@ it('returns a 400 if the user provides an invalid title or price', async () =>  
         .set('Cookie', cookie)
         .send({
             title: 'Movie4',
-            price: '-20'
+            price: -20
         })
         .expect(400);
     
@@ -98,7 +123,7 @@ it('updates the ticket if valid input is provided', async () =>  {
         .set('Cookie', cookie)
         .send({
             title: 'Movie2',
-            price: '20'
+            price: 20
         })
         .expect(201);
 
@@ -107,7 +132,7 @@ it('updates the ticket if valid input is provided', async () =>  {
         .set('Cookie', cookie)
         .send({
             title: 'Movie3',
-            price: '18'
+            price: 18
         })
         .expect(200);
     
@@ -117,7 +142,7 @@ it('updates the ticket if valid input is provided', async () =>  {
         .expect(200);
 
     expect(getResponse.body.title).toEqual('Movie3');
-    expect(getResponse.body.price).toEqual('18');
+    expect(getResponse.body.price).toEqual(18);
     
 });
 
@@ -128,7 +153,7 @@ it('publishes an event', async () => {
         .set('Cookie', cookie)
         .send({
             title: 'Movie2',
-            price: '20'
+            price: 20
         })
         .expect(201);
 
@@ -137,7 +162,7 @@ it('publishes an event', async () => {
         .set('Cookie', cookie)
         .send({
             title: 'Movie3',
-            price: '18'
+            price: 18
         })
         .expect(200);
     

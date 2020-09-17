@@ -5,7 +5,7 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 // to create a new ticket
 interface TicketAttributes {
     title: string;
-    price: string;
+    price: number;
     userId: string;
 }
 
@@ -17,9 +17,10 @@ interface TicketModel extends mongoose.Model<TicketDocument> {
 // An interface that describes the properties of a Ticket Document
 interface TicketDocument extends mongoose.Document {
     title: string;
-    price: string;
+    price: number;
     userId: string;
-    version: number
+    version: number;
+    orderId?: string;
 }
 
 const ticketSchema = new mongoose.Schema({
@@ -28,12 +29,15 @@ const ticketSchema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     },
     userId: {
         type: String,
         required: true
+    },
+    orderId: {
+        type: String
     }
 }, {
     toJSON: {

@@ -3,7 +3,7 @@ import { Ticket } from '../ticket';
 it('implements optimistic concurrency control', async (done) => {
     const ticket = Ticket.build({
         title: 'concert',
-        price: '5',
+        price: 5,
         userId: '123'
     });
 
@@ -12,8 +12,8 @@ it('implements optimistic concurrency control', async (done) => {
     const firstInstance = await Ticket.findById(ticket.id);
     const secondInstance = await Ticket.findById(ticket.id);
 
-    firstInstance!.set({ price: '10'});
-    secondInstance!.set({ price: '150'});
+    firstInstance!.set({ price: 10});
+    secondInstance!.set({ price: 150});
     
     await firstInstance!.save();
     try {
@@ -29,7 +29,7 @@ it('implements optimistic concurrency control', async (done) => {
 it('increments the version number on each save', async () => {
     const ticket = Ticket.build({
         title: 'concert',
-        price: '5',
+        price: 5,
         userId: '123'
     });
 
@@ -41,4 +41,4 @@ it('increments the version number on each save', async () => {
 
     expect(ticket.version).toEqual(1);
 
-});
+});        

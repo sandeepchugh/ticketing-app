@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@sandeepchugh/common';
 import { TicketDocument } from './ticket';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { verify } from 'jsonwebtoken';
 
 // An interface that describes the properties required
 // to create a new order
@@ -23,6 +25,7 @@ interface OrderDocument extends mongoose.Document {
     expiresAt: Date;
     userId: string;
     ticket: TicketDocument;
+    version: number;
 }
 
 const orderSchema = new mongoose.Schema({
@@ -52,6 +55,8 @@ const orderSchema = new mongoose.Schema({
     }
 });
 
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attributes: OrderAttributes) => {
     return new Order(attributes);

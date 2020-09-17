@@ -76,13 +76,13 @@ it('creates a valid ticket with valid inputs', async () => {
         .set('Cookie', global.signin())
         .send({
             title: title,
-            price: "10"
+            price: 10
         })
         .expect(201);
 
     tickets = await Ticket.find({});
     expect(tickets.length).toEqual(1);
-    expect(tickets[0].price).toEqual("10");
+    expect(tickets[0].price).toEqual(10);
     expect(tickets[0].title).toEqual(title);
 });
 
@@ -96,7 +96,7 @@ it('publishes an event', async () => {
         .set('Cookie', global.signin())
         .send({
             title: title,
-            price: "10"
+            price: 10
         })
         .expect(201);
 

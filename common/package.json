@@ -1,6 +1,6 @@
 {
   "name": "@sandeepchugh/common",
-  "version": "1.0.11",
+  "version": "1.0.16",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",

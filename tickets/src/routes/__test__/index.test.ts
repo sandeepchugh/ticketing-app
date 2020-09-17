@@ -7,7 +7,7 @@ const createTicket = () => {
         .set('Cookie', global.signin())
         .send({
             title: "Movie1",
-            price: "20"
+            price: 20
         })
         .expect(201);
 }
