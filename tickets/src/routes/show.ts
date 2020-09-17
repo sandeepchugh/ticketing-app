@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 import {  NotFoundError } from '@sandeepchugh/common';
-import { Ticket } from '../models/tickets';
+import { Ticket } from '../models/ticket';
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express';
-import { Ticket } from '../models/tickets';
+import { Ticket } from '../models/ticket';
 import {  requireAuth,validateRequest, NotFoundError, NotAuthorizedError } from '@sandeepchugh/common';
 import { body } from 'express-validator';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
@@ -37,7 +37,8 @@ router.put('/api/tickets/:id', requireAuth,  [
         id: ticket.id,
         price: ticket.price,
         title: ticket.title,
-        userId: ticket.userId
+        userId: ticket.userId,
+        version: ticket.version
     })
     
     res.send(ticket);
